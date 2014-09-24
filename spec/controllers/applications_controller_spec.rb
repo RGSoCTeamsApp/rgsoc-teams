@@ -60,13 +60,7 @@ describe ApplicationsController do
         end.to change { user.applications.count }.by(1)
         expect(response).to render_template 'create'
       end
-
-      it 'saves the application' do
-        post :save
-        expect(response).to render_template 'display'
-      end
     end
-
 
     describe 'application period' do
       context 'period is over' do

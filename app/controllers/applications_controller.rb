@@ -30,24 +30,6 @@ class ApplicationsController < ApplicationController
     end
   end
 
-  def display
-    render 'display'
-  end
-
-  def save
-    @application = Application.new(application_params)
-
-    respond_to do |format|
-      if @application.save
-        format.html { redirect_to @application, notice: 'Application was successfully saved.' }
-        format.json { render action: :display, status: :created, location: @application }
-      else
-        format.html { render action: :new }
-        format.json { render json: @application.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   def edit
     @application = Application.find(params[:id])
   end
