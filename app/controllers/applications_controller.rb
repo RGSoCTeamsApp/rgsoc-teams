@@ -3,7 +3,7 @@ class ApplicationsController < ApplicationController
 
   before_filter :store_filters, only: :index
   before_filter :persist_order, only: :index
-  before_filter :checktime, only: [:new, :create]
+  #before_filter :checktime, only: [:new, :create]
   before_action :authenticate_user!, except: :new
   before_filter -> { require_role 'reviewer' }, except: [:new, :create]
   respond_to :html
@@ -20,7 +20,7 @@ class ApplicationsController < ApplicationController
     end
   end
 
-  def create
+  def submit
     if application_form.valid?
       @application = current_user.applications.create!(application_params)
       ApplicationFormMailerWorker.new.async.perform(application_id: @application.id)
@@ -30,6 +30,17 @@ class ApplicationsController < ApplicationController
     end
   end
 
+  def display
+    @application = Application.find(params[:id])
+    render 'new'
+  end
+
+  def create
+    if application_form.valid?
+      @application = current_user.applications.create!(application_params)
+
+    end
+  end
   def edit
     @application = Application.find(params[:id])
   end
