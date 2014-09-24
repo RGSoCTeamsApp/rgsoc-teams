@@ -36,4 +36,5 @@ p.attention
   = f.input :misc_info, as: :text, label: 'Please use the space below to address anything that you feel is relevant to your application and was not covered previously.', input_html: { rows: 4 }, hint: 'This question is optional'
 
   .actions
+    = f.button :submit, 'Save as Draft', class: 'btn btn-success'
     = f.button :submit, 'Ok, apply!', class: 'btn btn-success'

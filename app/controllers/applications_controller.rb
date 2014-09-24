@@ -20,7 +20,7 @@ class ApplicationsController < ApplicationController
     end
   end
 
-  def submit
+  def create
     if application_form.valid?
       @application = current_user.applications.create!(application_params)
       ApplicationFormMailerWorker.new.async.perform(application_id: @application.id)
@@ -31,16 +31,23 @@ class ApplicationsController < ApplicationController
   end
 
   def display
-    @application = Application.find(params[:id])
-    render 'new'
+    render 'display'
   end
 
-  def create
-    if application_form.valid?
-      @application = current_user.applications.create!(application_params)
+  def save
+    @application = Application.new(application_params)
 
+    respond_to do |format|
+      if @application.save
+        format.html { redirect_to @application, notice: 'Application was successfully saved.' }
+        format.json { render action: :display, status: :created, location: @application }
+      else
+        format.html { render action: :new }
+        format.json { render json: @application.errors, status: :unprocessable_entity }
+      end
     end
   end
+
   def edit
     @application = Application.find(params[:id])
   end

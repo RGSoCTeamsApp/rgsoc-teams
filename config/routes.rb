@@ -29,6 +29,8 @@ RgsocTeams::Application.routes.draw do
   get 'application', to: 'applications#new', as: :apply
   get 'application_forms', to: 'applications#new'
   post 'application_forms', to: 'applications#create'
+  post 'application_forms/save', to: 'applications#save'
+  get 'application_forms/display', to: 'applications#display'
 
   get 'teams/info', to: 'teams_info#index'
   resources :teams, concerns: :has_roles do
